@@ -1,0 +1,15 @@
+{
+  "name": "issspokie",
+  "version": "1.0.0",
+  "description": "A platform for sharing ghostly encounters",
+  "license": "ISC",
+  "author": "Pratik",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "sanitize-html": "^2.17.0"
+  }
+}
