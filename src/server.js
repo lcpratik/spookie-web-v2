@@ -22,7 +22,7 @@ let Server = http.createServer(async(req,res)=>{
         return await handleNews(req,res)
     }
 
-    else if(!req.url.startsWith("/api"))
+    else if(!req.url.startsWith("/api")) 
     {
         await serveStatic(req,res,rootDir)
     }

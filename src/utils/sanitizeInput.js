@@ -1,4 +1,5 @@
 import sanitizeHtml from 'sanitize-html'
+//It's a third-party library/package
 
 export function sanitizeInput(data){
     const sanitizedData= {}
