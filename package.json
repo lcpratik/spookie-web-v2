@@ -1,18 +1,29 @@
 {
-  "name": "issspokie",
+  "name": "spookieweb",
   "version": "1.0.0",
-  "description": "A platform for sharing ghostly encounters",
+  "description": "A community platform for sharing paranormal sightings",
   "license": "ISC",
   "author": "Pratik",
   "type": "module",
-  "main": "src/server.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node src/server.js"
+    "dev": "concurrently -n server,client -c blue,magenta \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "node --env-file=.env --watch server/index.js",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "node --env-file=.env server/index.js",
+    "db:migrate": "node --env-file=.env server/db/migrate.js",
+    "db:seed": "node --env-file=.env server/db/seed.js",
+    "db:geocode": "node --env-file=.env server/db/backfill-geocode.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "multer": "^2.0.1",
     "pg": "^8.22.0",
     "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }

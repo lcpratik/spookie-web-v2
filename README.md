@@ -1,57 +1,80 @@
-# 👻 Spokiee Web
+# 👻 Spookie Web
 
-A full-stack horror story community platform where users can publish, browse, and read spooky stories. Built with a custom Node.js server, RESTful API design, and a dark, immersive frontend — no heavy frameworks, just clean modular architecture.
-
----
-
-## Features
-
-- 📖 Public story submission and retrieval — no account required
-- 🧩 Modular backend with separated handlers, events, and data layers
-- 🌐 Custom Node.js HTTP server (no Express)
-- 🎨 Dark, atmospheric frontend with a horror-themed design
-- 🛡️ Input sanitization and structured error handling
-
----
+A full-stack community platform for reporting and browsing paranormal sightings — React frontend, Express API, PostgreSQL (Neon) storage.
 
 ## Tech Stack
 
-| Layer     | Technology                  |
-|-----------|-----------------------------|
-| Backend   | Node.js (custom HTTP server)|
-| Frontend  | HTML, CSS, JavaScript       |
-| Storage   | JSON-based data layer       |
-
----
+| Layer     | Technology                          |
+|-----------|--------------------------------------|
+| Frontend  | React 18 + React Router (Vite)      |
+| Backend   | Express 5, `pg`, `multer`           |
+| Database  | PostgreSQL (Neon)                   |
+| Real-time | Server-Sent Events (SSE) alerts     |
 
 ## Project Structure
 
 ```
-Spokiee-Web/
-├── package.json
-├── src/                      # Server-side source code
-│   ├── server.js             # HTTP server entry point / router
-│   ├── data/                 # Data access layer
-│   │   ├── data.json
-│   │   ├── sightingsStore.js # read/write sightings
-│   │   └── stories.js
-│   ├── events/
-│   │   └── sightingEvents.js # sighting-added event wiring
-│   ├── handlers/
-│   │   └── routeHandlers.js  # /api and /api/news request handlers
-│   ├── services/
-│   │   └── createAlert.js    # ghost hunter alert side effect
-│   └── utils/
-│       ├── contentType.js
-│       ├── parseJsonBody.js
-│       ├── sanitizeInput.js
-│       ├── sendResponse.js
-│       └── serveStatic.js
-└── public/                   # Static assets served to the browser
-    ├── index.html / index.js / index.css
-    ├── news.html / news.js
-    ├── sightings.html
-    ├── upload-sighting.html / upload-sighting.js
-    ├── 404.html
-    └── images/
+Spookie-Web/
+├── package.json          # backend deps + root scripts
+├── .env                  # DATABASE_URL (not committed)
+├── server/
+│   ├── index.js          # Express app entry
+│   ├── db/
+│   │   ├── schema.sql    # tables, trigger, indexes
+│   │   ├── pool.js       # pg Pool
+│   │   ├── migrate.js    # applies schema.sql
+│   │   └── seed.js       # seeds from legacy data.json (once)
+│   ├── routes/
+│   │   ├── sightings.js  # sightings, comments, upvotes
+│   │   └── alerts.js     # SSE stream
+│   ├── middleware/upload.js  # multer photo upload
+│   ├── lib/sanitize.js
+│   ├── events.js         # EventEmitter -> SSE bridge
+│   └── uploads/           # uploaded photos (gitignored)
+└── client/                # Vite + React SPA
+    ├── src/
+    │   ├── pages/          # Home, Read, SightingDetail, MapPage, Upload, Alerts
+    │   ├── components/     # Header, SightingCard, UpvoteButton, AuthModal, ...
+    │   ├── context/        # AuthContext (local identity), AlertsContext (SSE)
+    │   └── styles/index.css
+    └── public/images/      # candle-logo.png, ghostbg.jpg
 ```
+
+## Setup
+
+```bash
+npm install
+npm --prefix client install
+npm run db:migrate   # create tables/trigger/indexes
+npm run db:seed      # seed once if sightings table is empty
+```
+
+## Development
+
+```bash
+npm run dev   # runs Express (6969) + Vite dev server (5173, proxies /api and /uploads)
+```
+
+## Production
+
+```bash
+npm run build   # builds client/dist
+npm start        # Express serves the API and the built SPA on one port
+```
+
+## API
+
+| Method | Path                              | Description                          |
+|--------|------------------------------------|---------------------------------------|
+| GET    | `/api/sightings`                  | list, with `search`, `location`, `sort` (`newest`/`corroborated`/`discussed`), `page`, `limit`, `viewer` |
+| GET    | `/api/sightings/locations`        | distinct locations for the filter dropdown |
+| GET    | `/api/sightings/:uuid`            | full sighting + comments             |
+| POST   | `/api/sightings`                  | create sighting (multipart, optional `photo`) |
+| POST   | `/api/sightings/:uuid/comments`   | add a comment                        |
+| POST   | `/api/sightings/:uuid/upvote`     | toggle upvote for `user_identifier`  |
+| GET    | `/api/alerts/stream`              | SSE stream of `sighting-added` events |
+
+## Notes
+
+- Auth is a lightweight client-side identity (name + email in `localStorage`) used to attribute comments and dedupe upvotes — there's no password/session backend, matching the "simple auth" scope of this build.
+- The Map page/toggle is a real Leaflet + OpenStreetMap map. New sightings are geocoded server-side (Nominatim) on submission (`server/lib/geocode.js`); run `npm run db:geocode` to backfill coordinates for any existing sightings that predate this.
