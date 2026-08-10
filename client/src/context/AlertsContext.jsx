@@ -35,6 +35,6 @@ export function AlertsProvider({ children }) {
 
 export function useAlerts() {
     const ctx = useContext(AlertsContext)
-    if (!ctx) throw new Error("useAlertss must be used within AlertsProviders")
+    if (!ctx) throw new Error("useAlertss must be used within AlertsProviderss")
     return ctx
 }
