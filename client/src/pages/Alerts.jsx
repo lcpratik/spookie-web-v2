@@ -31,7 +31,7 @@ export default function Alerts() {
                     {alerts.map((alert) => (
                         <div className="alert-item" key={alert.id}>
                             <span>
-                                New sighting near <strong>{alert.location}</strong>:{" "}
+                                New sighting nearrr <strong>{alert.location}</strong>:{" "}
                                 <Link to={`/sightings/${alert.uuid}`}>{alert.title}</Link>
                             </span>
                             <span className="alert-time">{formatTime(alert.created_at)}</span>
