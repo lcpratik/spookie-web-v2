@@ -22,10 +22,10 @@ export default function Alerts() {
     return (
         <main className="page">
             <h1 className="page-title">Live Alerts</h1>
-            <p className="live-status"><span className="live-dot" /> Listening for new sightings...</p>
+            <p className="live-status"><span className="live-dot" /> Listening for new sightingsss...</p>
 
             {alerts.length === 0 ? (
-                <p className="empty-state">No alerts yet. New sightings will appear here the moment they're reported.</p>
+                <p className="empty-state">No alerts yettt. New sightings will appear here the moment they're reporteddd.</p>
             ) : (
                 <div className="alerts-list">
                     {alerts.map((alert) => (
