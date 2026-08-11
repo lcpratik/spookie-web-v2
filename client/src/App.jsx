@@ -17,8 +17,8 @@ export default function App() {
                 <Route path="/read" element={<Readdd />} />
                 <Route path="/sightings/:uuid" element={<SightingDetailll />} />
                 <Route path="/map" element={<MapPageee />} />
-                <Route path="/upload" element={<Uploaddd />} />
-                <Route path="/alerts" element={<Alertsss />} />
+                <Route path="/upload" element={<Uploadd />} />
+                <Route path="/alerts" element={<Alertss />} />
             </Routes>
             <Footer />
         </>
