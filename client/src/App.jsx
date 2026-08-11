@@ -13,12 +13,12 @@ export default function App() {
         <>
             <Header />
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/read" element={<Read />} />
-                <Route path="/sightings/:uuid" element={<SightingDetail />} />
-                <Route path="/map" element={<MapPage />} />
-                <Route path="/upload" element={<Upload />} />
-                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/" element={<Homeee />} />
+                <Route path="/read" element={<Readdd />} />
+                <Route path="/sightings/:uuid" element={<SightingDetailll />} />
+                <Route path="/map" element={<MapPageee />} />
+                <Route path="/upload" element={<Uploaddd />} />
+                <Route path="/alerts" element={<Alertsss />} />
             </Routes>
             <Footer />
         </>
