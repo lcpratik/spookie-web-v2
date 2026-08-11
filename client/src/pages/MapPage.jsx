@@ -14,12 +14,12 @@ export default function MapPage() {
 
     return (
         <main className="page">
-            <h1 className="page-title">Sighting Map</h1>
+            <h1 className="page-title">Sighting Mappp</h1>
             <p className="map-note">
-                Locations are geocoded automatically from each report's location field.
+                Locations are geocoded automatically from each report's location fielddd.
             </p>
             {loading ? (
-                <p className="empty-state">Loading map...</p>
+                <p className="empty-state">Loading mappp...</p>
             ) : (
                 <SightingMap sightings={sightings} />
             )}
