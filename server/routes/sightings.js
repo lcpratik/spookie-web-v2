@@ -9,7 +9,7 @@ export const sightingsRouter = Router()
 
 const SORTS = {
     newest: "s.created_at DESC",
-    corroborated: "s.upvote_count DESC, s.created_at DESC",
+    corroborated: "s.vote_count DESC, s.created_at DESC",
     discussed: "comment_count DESC, s.created_at DESC",
 }
 
@@ -42,7 +42,7 @@ sightingsRouter.get("/", async (req, res, next) => {
 
         const { rows } = await pool.query(
             `SELECT s.id, s.uuid, s.title, s.body, s.location, s.occurred_at,
-                    s.created_at, s.photo_url, s.upvote_count, s.lat, s.lng,
+                    s.created_at, s.photo_url, s.vote_count, s.lat, s.lng,
                     COUNT(DISTINCT c.id)::int AS comment_count,
                     BOOL_OR(u.user_identifier IS NOT NULL) AS upvoted
              FROM sightings s
@@ -204,11 +204,11 @@ sightingsRouter.post("/:uuid/upvote", async (req, res, next) => {
         }
 
         const { rows: updated } = await pool.query(
-            "SELECT upvote_count FROM sightings WHERE id = $1",
+            "SELECT vote_count FROM sightings WHERE id = $1",
             [sightingId]
         )
 
-        res.json({ upvoted, upvote_count: updated[0].upvote_count })
+        res.json({ upvoted, vote_count: updated[0].vote_count })
     } catch (err) {
         next(err)
     }

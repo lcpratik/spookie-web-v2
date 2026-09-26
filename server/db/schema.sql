@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS sightings (
     occurred_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     photo_url TEXT,
-    upvote_count INTEGER NOT NULL DEFAULT 0,
+    vote_count INTEGER NOT NULL DEFAULT 0,
     lat DOUBLE PRECISION,
     lng DOUBLE PRECISION
 );
@@ -44,10 +44,10 @@ CREATE OR REPLACE FUNCTION update_sighting_upvote_count()
 RETURNS TRIGGER AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        UPDATE sightings SET upvote_count = upvote_count + 1 WHERE id = NEW.sighting_id;
+        UPDATE sightings SET vote_count = vote_count + 1 WHERE id = NEW.sighting_id;
         RETURN NEW;
     ELSIF TG_OP = 'DELETE' THEN
-        UPDATE sightings SET upvote_count = upvote_count - 1 WHERE id = OLD.sighting_id;
+        UPDATE sightings SET vote_count = vote_count - 1 WHERE id = OLD.sighting_id;
         RETURN OLD;
     END IF;
     RETURN NULL;

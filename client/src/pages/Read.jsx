@@ -53,7 +53,7 @@ export default function Read() {
 
     const handleUpvoteChange = useCallback((uuid, result) => {
         setSightings((prev) => prev.map((s) => (
-            s.uuid === uuid ? { ...s, upvoted: result.upvoted, upvote_count: result.upvote_count } : s
+            s.uuid === uuid ? { ...s, upvoted: result.upvoted, vote_count: result.vote_count } : s
         )))
     }, [])
 

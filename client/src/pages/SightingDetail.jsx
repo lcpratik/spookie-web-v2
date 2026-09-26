@@ -81,9 +81,9 @@ export default function SightingDetail() {
                     <UpvoteButton
                         uuid={sighting.uuid}
                         upvoted={sighting.upvoted}
-                        upvoteCount={sighting.upvote_count}
+                        upvoteCount={sighting.vote_count}
                         onChange={(result) => setSighting((prev) => ({
-                            ...prev, upvoted: result.upvoted, upvote_count: result.upvote_count,
+                            ...prev, upvoted: result.upvoted, vote_count: result.vote_count,
                         }))}
                     />
                     <span className="comment-count">💬 {sighting.comment_count} comments</span>
