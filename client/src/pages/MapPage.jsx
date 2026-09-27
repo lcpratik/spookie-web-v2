@@ -16,7 +16,7 @@ export default function MapPage() {
         <main className="page">
             <h1 className="page-title">Sighting Mappp</h1>
             <p className="map-note">
-                Locations are geocoded automatically from each report's location fielddd.
+                Locations are geocoded automatically from each report's location field.
             </p>
             {loading ? (
                 <p className="empty-state">Loading map...</p>
