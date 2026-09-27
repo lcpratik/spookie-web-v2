@@ -14,7 +14,7 @@ export default function MapPage() {
 
     return (
         <main className="page">
-            <h1 className="page-title">Sighting Mappp</h1>
+            <h1 className="page-title">Sighting Map</h1>
             <p className="map-note">
                 Locations are geocoded automatically from each report's location field.
             </p>
