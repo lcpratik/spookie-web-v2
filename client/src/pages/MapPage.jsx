@@ -19,7 +19,7 @@ export default function MapPage() {
                 Locations are geocoded automatically from each report's location field.
             </p>
             {loading ? (
-                <p className="empty-state">Loading map....</p>
+                <p className="empty-state">Loading map...</p>
             ) : (
                 <SightingMap sightings={sightings} />
             )}
